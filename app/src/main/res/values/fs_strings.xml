@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fs_action_settings">Settings</string>
+    <string name="fs_action_edit">Edit</string>
+    <string name="fs_action_delete">Delete</string>
+    <string name="fs_action_drop_down">Navigation</string>
+    <string name="fs_action_home">Home</string>
+    <string name="fs_action_search">Search</string>
+    <string name="fs_action_search_clear">Clear</string>
+    <string name="fs_action_sort">Sort</string>
+    <string name="fs_action_grid">Grid View</string>
+    <string name="fs_action_list">List View</string>
+    <string name="fs_action_share">Share</string>
+    <string name="fs_action_select_all">Select All</string>
+    <string name="fs_action_copy_to">Copy to …</string>
+    <string name="fs_action_by_name">By name</string>
+    <string name="fs_action_by_date">By date modified</string>
+    <string name="fs_action_by_size">By size</string>
+
+    <string name="fs_title_smb_add">Add Server</string>
+    <string name="fs_title_smb_edit">Edit Server</string>
+    <string name="fs_title_smb_delete">Delete Server</string>
+    <string name="fs_message_smb_delete">Are you sure to delete server.</string>
+    <string name="fs_smb_empty"></string>
+
+    <string name="fs_hint_search">Search…</string>
+
+    <string name="fs_smb_domain">Domain</string>
+    <string name="fs_smb_domain_hint">Domain name, can be empty</string>
+    <string name="fs_smb_server">Server</string>
+    <string name="fs_smb_server_hint">IP Addr., or IP Addr./ShareFolder</string>
+    <string name="fs_smb_username">User Name</string>
+    <string name="fs_smb_password">Password</string>
+    <string name="fs_smb_anonymous">Anonymous</string>
+    <string name="fs_smb_display_name">Display as</string>
+    <string name="fs_smb_display_name_hint">Display name, can be empty</string>
+</resources>

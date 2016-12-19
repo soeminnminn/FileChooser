@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:listPreferredItemHeight"
+	android:background="?selectableItemBackground" >
+
+    <com.s16.widget.CheckableRelativeLayout
+        android:id="@+id/fileItemCheck"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/list_item_checkable_background"
+        android:paddingLeft="@dimen/list_item_horizontal_margin"
+        android:paddingStart="@dimen/list_item_horizontal_margin"
+        android:paddingRight="@dimen/list_item_horizontal_margin"
+        android:paddingEnd="@dimen/list_item_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/fileItemImage"
+            android:layout_width="?android:listPreferredItemHeight"
+            android:layout_height="?android:listPreferredItemHeight"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/empty_string"
+            android:paddingLeft="@dimen/list_item_icon_horizontal_margin"
+            android:paddingStart="@dimen/list_item_icon_horizontal_margin"
+            android:paddingRight="@dimen/list_item_icon_horizontal_margin"
+            android:paddingEnd="@dimen/list_item_icon_horizontal_margin"
+            android:paddingTop="@dimen/list_item_icon_vertical_margin"
+            android:paddingBottom="@dimen/list_item_icon_vertical_margin"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_check_circle_grey" />
+
+        <LinearLayout
+            android:id="@+id/fileTextFrame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/fileItemImage"
+            android:layout_toEndOf="@id/fileItemImage"
+            android:layout_toLeftOf="@+id/fileItemMenu"
+            android:layout_toStartOf="@+id/fileItemMenu"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/fileItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:maxLines="1"
+                android:ellipsize="middle"
+                android:text="@string/app_name"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:textColor="@color/bright_foreground_holo_light" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/fileItemDate"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:text="@string/app_name"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    android:textSize="@dimen/list_item_text_size_secondary" />
+
+                <TextView
+                    android:id="@+id/fileItemSize"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:text="@string/app_name"
+                    android:textAppearance="?android:attr/textAppearanceListItemSmall"
+                    android:textSize="@dimen/list_item_text_size_secondary" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/fileItemMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/list_item_menu_button_padding"
+            android:contentDescription="@string/empty_string"
+            android:scaleType="center"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/ic_more_vert_grey"
+            android:visibility="gone"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/one_dip"
+            android:layout_toRightOf="@+id/fileItemImage"
+            android:layout_toEndOf="@+id/fileItemImage"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/divider_background"/>
+
+    </com.s16.widget.CheckableRelativeLayout>
+    
+</FrameLayout>

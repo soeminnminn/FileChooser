@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/action_settings" >
+
+    <PreferenceCategory
+        android:title="@string/prefs_category_general">
+
+        <CheckBoxPreference
+            android:key="fs_settings_show_hidden"
+            android:summary="@string/prefs_show_hidden_summary"
+            android:title="@string/prefs_show_hidden"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="fs_settings_show_network"
+            android:summary="@string/prefs_show_network_summary"
+            android:title="@string/prefs_show_network"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="fs_settings_show_alias_up"
+            android:summary="@string/prefs_show_alias_up_summary"
+            android:title="@string/prefs_show_alias_up"
+            android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:key="fs_settings_show_root"
+            android:summary="@string/prefs_show_root_summary"
+            android:title="@string/prefs_show_root" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/prefs_category_about">
+
+        <com.s16.app.AboutPreference
+            android:key="prefs_about"
+            android:summary=""
+            android:title="@string/prefs_about" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
