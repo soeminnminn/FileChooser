@@ -3,6 +3,7 @@ package com.s16.filechooser.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,12 +27,17 @@ public class FileListFragment extends Fragment
         implements FileListAdapter.OnFileListClickListener {
 
     protected static final String TAG = FileListFragment.class.getSimpleName();
+    private static final String KEY_LAYOUT_MANAGER = FileSettings.KEY_VIEW_MODE;
 
     public interface FileListInteractionCallback {
         public void onOpenNewEntry(FileEntry entry);
         public void onEntryCheckedChanged(FileEntry entry, boolean isChecked, boolean isSelectMode, int selectedCount);
         public void onEntrySelectAll(int selectedCount);
     }
+
+    protected int mCurrentLayoutManagerType;
+    private RecyclerView mRecyclerView;
+    private int mGridColumnCount = 2;
 
     private FileListInteractionCallback mListener;
     private FileEntry mEntry;
@@ -74,10 +80,10 @@ public class FileListFragment extends Fragment
         ViewGroup rootView = (ViewGroup) inflater
                 .inflate(R.layout.fragment_file_list, container, false);
 
+        if (mSettings == null) {
+            mSettings = FileSettings.getInstance(getContext());
+        }
         if (mEntry == null) {
-            if (mSettings == null) {
-                mSettings = FileSettings.getInstance(getContext());
-            }
             if (mSettings.isShowFromRoot()) {
                 mEntry = new RootFileEntry(mSettings, null);
             } else {
@@ -85,11 +91,19 @@ public class FileListFragment extends Fragment
             }
         }
 
-        RecyclerView listView = (RecyclerView)rootView.findViewById(R.id.fs_fileList);
-        listView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView = (RecyclerView)rootView.findViewById(R.id.fs_fileList);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mCurrentLayoutManagerType = mSettings.getViewMode();
+        if (savedInstanceState != null) {
+            // Restore saved layout manager type.
+            mCurrentLayoutManagerType = savedInstanceState.getInt(KEY_LAYOUT_MANAGER, mSettings.getViewMode());
+        }
+        setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+
         mAdapter = new FileListAdapter(getContext(), mEntry);
+        mAdapter.setViewMode(mCurrentLayoutManagerType);
         mAdapter.setOnFileListClickListener(this);
-        listView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);
 
         return rootView;
     }
@@ -110,8 +124,45 @@ public class FileListFragment extends Fragment
         super.onDetach();
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_LAYOUT_MANAGER, mCurrentLayoutManagerType);
+        super.onSaveInstanceState(outState);
+    }
+
     private void onBackPressed() {
         getActivity().onBackPressed();
+    }
+
+    /**
+     * Set RecyclerView's LayoutManager to the one given.
+     *
+     * @param layoutManagerType Type of layout manager to switch to.
+     */
+    private void setRecyclerViewLayoutManager(int layoutManagerType) {
+        int scrollPosition = 0;
+
+        // If a layout manager has already been set, get current scroll position.
+        if (mRecyclerView.getLayoutManager() != null) {
+            scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager())
+                    .findFirstCompletelyVisibleItemPosition();
+        }
+
+        RecyclerView.LayoutManager layoutManager;
+
+        mCurrentLayoutManagerType = layoutManagerType;
+        switch (layoutManagerType) {
+            case FileSettings.VIEW_GRID:
+                layoutManager = new GridLayoutManager(getActivity(), mGridColumnCount);
+                break;
+            case FileSettings.VIEW_LIST:
+            default:
+                layoutManager = new LinearLayoutManager(getActivity());
+                break;
+        }
+
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.scrollToPosition(scrollPosition);
     }
 
     @Override
@@ -187,7 +238,10 @@ public class FileListFragment extends Fragment
     }
 
     public void setViewMode(int viewMode) {
-
+        if (mAdapter != null) {
+            mAdapter.setViewMode(viewMode);
+        }
+        setRecyclerViewLayoutManager(viewMode);
     }
 
     private void performAddShare(FileEntry entry) {

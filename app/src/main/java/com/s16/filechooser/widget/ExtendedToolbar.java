@@ -1,10 +1,8 @@
 package com.s16.filechooser.widget;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.support.annotation.StringRes;
@@ -15,7 +13,6 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -145,6 +142,8 @@ public class ExtendedToolbar extends Toolbar
             itemView.setAllCaps(false);
             itemView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
             itemView.setTextColor(Color.parseColor("#fff3f3f3"));
+            itemView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
+            itemView.setMaxLines(1);
             if (!TextUtils.isEmpty(mTitle)) {
                 itemView.setText(mTitle);
             }
@@ -439,22 +438,14 @@ public class ExtendedToolbar extends Toolbar
 
     private void showNavDropDown() {
         if (mNavTitleView != null) {
-            long downTime = SystemClock.uptimeMillis();
-            long eventTime = downTime + 100;
-            float x = 0.0f;
-            float y = 0.0f;
-            int metaState = 0;
-            MotionEvent motionEvent = MotionEvent.obtain(downTime, eventTime,
-                    MotionEvent.ACTION_DOWN, x, y, metaState);
-
-            mNavTitleView.dispatchTouchEvent(motionEvent);
-
-            downTime = SystemClock.uptimeMillis() + 100;
-            eventTime = downTime + 100;
-            motionEvent = MotionEvent.obtain(downTime, eventTime,
-                    MotionEvent.ACTION_UP, x, y, metaState);
-
-            mNavTitleView.dispatchTouchEvent(motionEvent);
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    mNavTitleView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(),
+                            SystemClock.uptimeMillis(), MotionEvent.ACTION_DOWN, 0, 0, 0));
+                    mNavTitleView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(),
+                            SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, 0, 0, 0));
+                }
+            }, 100);
         }
     }
 

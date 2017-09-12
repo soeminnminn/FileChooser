@@ -98,6 +98,7 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
     private List<FileEntry> mFiles = new ArrayList<FileEntry>();
     private FileEntry mClickedEntry;
     private boolean mSelectMode;
+    private int mViewMode;
     private List<FileEntry> mSelectedEntries;
     private OnFileListClickListener mClickListener;
 
@@ -138,7 +139,12 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-        View view = layoutInflater.inflate(R.layout.file_list_item, parent, false);
+        View view;
+        if (mViewMode == FileSettings.VIEW_GRID) {
+            view = layoutInflater.inflate(R.layout.file_grid_item, parent, false);
+        } else {
+            view = layoutInflater.inflate(R.layout.file_list_item, parent, false);
+        }
         return new RecyclerViewHolder(view);
     }
 
@@ -216,6 +222,12 @@ public class FileListAdapter extends RecyclerView.Adapter<RecyclerViewHolder>
 
     public void setOnFileListClickListener(OnFileListClickListener listener) {
         mClickListener = listener;
+    }
+
+    public void setViewMode(int viewMode) {
+        FileSettings.getInstance(getContext()).setViewMode(viewMode);
+        mViewMode = viewMode;
+        notifyRefresh();
     }
 
     public void setSortMode(int sortMode) {

@@ -2,14 +2,32 @@
 <com.s16.widget.SquareLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/grid_item_margin"
+    android:paddingBottom="@dimen/grid_item_margin"
+    android:paddingRight="@dimen/grid_item_margin"
+    android:paddingLeft="@dimen/grid_item_margin"
+    android:paddingStart="@dimen/grid_item_margin"
+    android:paddingEnd="@dimen/grid_item_margin"
     android:background="?selectableItemBackground" >
 
     <com.s16.widget.CheckableRelativeLayout
         android:id="@+id/fileItemCheck"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/list_item_checkable_background">
+        android:button="@drawable/grid_item_button"
+        android:background="@drawable/grid_item_checkable_background">
+
+        <ImageView
+            android:id="@+id/fileItemImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/empty_string"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_check_circle_grey"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,7 +62,7 @@
                     android:ellipsize="middle"
                     android:text="@string/app_name"
                     android:textAppearance="?android:attr/textAppearanceListItem"
-                    android:textColor="@color/bright_foreground_holo_light" />
+                    android:textColor="@color/bright_foreground_holo_dark" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -61,7 +79,8 @@
                         android:maxLines="1"
                         android:text="@string/app_name"
                         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                        android:textSize="@dimen/list_item_text_size_secondary" />
+                        android:textSize="@dimen/list_item_text_size_secondary"
+                        android:textColor="@color/dim_foreground_holo_dark" />
 
                     <TextView
                         android:id="@+id/fileItemSize"
@@ -72,7 +91,8 @@
                         android:maxLines="1"
                         android:text="@string/app_name"
                         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                        android:textSize="@dimen/list_item_text_size_secondary" />
+                        android:textSize="@dimen/list_item_text_size_secondary"
+                        android:textColor="@color/dim_foreground_holo_dark" />
 
                 </LinearLayout>
 
@@ -93,23 +113,6 @@
                 android:visibility="gone"/>
 
         </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/fileItemImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/empty_string"
-            android:paddingLeft="@dimen/list_item_icon_horizontal_margin"
-            android:paddingStart="@dimen/list_item_icon_horizontal_margin"
-            android:paddingRight="@dimen/list_item_icon_horizontal_margin"
-            android:paddingEnd="@dimen/list_item_icon_horizontal_margin"
-            android:paddingTop="@dimen/list_item_icon_vertical_margin"
-            android:paddingBottom="@dimen/list_item_icon_vertical_margin"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_check_circle_grey"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
 
     </com.s16.widget.CheckableRelativeLayout>
 

@@ -49,8 +49,11 @@ public class FileChooserActivity extends BackStackActivity<FileListFragment>
         }
     };
 
+    private FileSettings mSettings;
     private ExtendedToolbar mToolbarMain;
     private Toolbar mToolbarEdit;
+    private MenuItem mViewAsGrid;
+    private MenuItem mViewAsList;
 
     protected Context getContext() {
         return this;
@@ -81,9 +84,11 @@ public class FileChooserActivity extends BackStackActivity<FileListFragment>
         mToolbarEdit.setOnMenuItemClickListener(this);
         mToolbarEdit.setVisibility(View.GONE);
 
+        mSettings = FileSettings.getInstance(getContext());
+
         if (savedInstanceState == null) {
             FileListFragment fragment = new FileListFragment();
-            FileEntry entry = fragment.setSettings(FileSettings.getInstance(getContext()));
+            FileEntry entry = fragment.setSettings(mSettings);
             String name = FRAGMENT_NAME_PREFIX + entry.getMD5hash();
             createNewFragment(R.id.fragmentContainer, name, fragment);
         }
@@ -111,6 +116,17 @@ public class FileChooserActivity extends BackStackActivity<FileListFragment>
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+        mViewAsGrid = menu.findItem(R.id.action_grid);
+        mViewAsList = menu.findItem(R.id.action_list);
+
+        if (mSettings.getViewMode() == FileSettings.VIEW_GRID) {
+            mViewAsGrid.setVisible(false);
+            mViewAsList.setVisible(true);
+        } else {
+            mViewAsGrid.setVisible(true);
+            mViewAsList.setVisible(false);
+        }
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -400,6 +416,13 @@ public class FileChooserActivity extends BackStackActivity<FileListFragment>
                 }
             }
         });
+        if (mode == FileSettings.VIEW_GRID) {
+            mViewAsList.setVisible(true);
+            mViewAsGrid.setVisible(false);
+        } else {
+            mViewAsList.setVisible(false);
+            mViewAsGrid.setVisible(true);
+        }
         FileSettings.saveSharedPreference(getContext(), FileSettings.KEY_VIEW_MODE, mode);
     }
 
